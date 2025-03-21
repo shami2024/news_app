@@ -26,23 +26,34 @@ class PostResource extends JsonResource
         }
         return [
             'id' => $this->id,
-            'author_id' => $this->author_id,
-            'category_id' => $this->category_id,
-            'category' => $this->category ? [
-                'id' => $this->category->id,
-                'name' => $this->category->name
-            ] : null, // Ensure category is returned correctly
-            'title' => $this->title,
-            'seo_title' => $this->seo_title,
-            'excerpt' => $this->excerpt,
-            'body' => $this->body,
-            'image' => $this->image,
-            'slug' => $this->slug,
-            'meta_description' => $this->meta_description,
-            'meta_keywords' => $this->meta_keywords,
-            // 'status' => $this->status,
-            'featured' => $this->featured,
-            'created_at' => $formattedDate, // Locale-based formatted date
+            // 'author_id' => $this->author_id,
+            // 'category_id' => $this->category_id,
+            // 'category' => $this->category ? [
+            //     'id' => $this->category->id,
+            //     'name' => $this->category->name
+            // ] : null, // Ensure category is returned correctly
+            'title' => $this->title ?? '',
+            'seo_title' => $this->seo_title ?? '',
+            'excerpt' => $this->excerpt ?? '',
+            'body' => $this->body ?? '',
+            'image' => asset('storage/' . $this->image) ?? '', 
+            'slug' => $this->slug ?? '',
+            'meta_description' => $this->meta_description ?? '',
+            'meta_keywords' => $this->meta_keywords ?? '',
+            'likes_count' => $this->likes_count,
+            'comments_count' => $this->comments_count,
+            'shares_count' => $this->shares_count,
+
+            'featured' => $this->featured ?? '',
+            'interests' => $this->interests ?? [],
+            
+            'created_at' => $formattedDate ?? '', // Locale-based formatted date 
+            'category' => $this->category ? new CategoryResource($this->category) : [],
+            'redaction' => $this->redaction ? new RedactionResource($this->redaction) : [],
+            'comments' => $this->comments ? CommentResource::collection($this->comments) : [],
+
+
+            
         ];
     }
 }

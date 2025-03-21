@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Redaction;
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
+use TCG\Voyager\Models\Category;
+use App\Http\Controllers\Admin\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +18,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $cat =Redaction::latest()->first();
+    $url = asset('storage/' . $cat->logo);
+
+    return $url;
     return view('welcome');
+});
+use App\Models\Interest;
+
+Route::get('/test-interests', function () {
+    return Interest::all();
 });
 
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+
 });

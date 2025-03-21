@@ -2,6 +2,13 @@
 
 namespace TCG\Voyager\Models;
 
+use App\Models\Comment;
+use App\Models\Interest;
+use App\Models\Like;
+use App\Models\Redaction;
+use App\Models\SavedPost;
+use App\Models\Share;
+use App\Models\ViewLog;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -54,4 +61,40 @@ class Post extends Model
     {
         return $this->belongsTo(Voyager::modelClass('Category'));
     }
+    public function redaction()
+    {
+        return $this->belongsTo(Redaction::class);
+    }
+    public function interests()
+    {
+        return $this->belongsToMany(Interest::class, 'user_interests');
+    }
+
+    public function savedByUsers()
+{
+    return $this->hasMany(SavedPost::class);
+}
+
+public function likes()
+{
+    return $this->hasMany(Like::class);
+}
+
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+
+public function shares()
+{
+    return $this->hasMany(Share::class);
+}
+
+public function viewLogs()
+{
+    return $this->hasMany(ViewLog::class);
+}
+
+
+
 }

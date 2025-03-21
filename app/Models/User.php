@@ -42,4 +42,35 @@ class User extends \TCG\Voyager\Models\User
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function profile()
+{
+    return $this->hasOne(Profile::class);
+}
+
+public function savedPosts()
+{
+    return $this->hasMany(SavedPost::class);
+}
+
+public function likes()
+{
+    return $this->hasMany(Like::class);
+}
+
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
+
+public function shares()
+{
+    return $this->hasMany(Share::class);
+}
+
+public function viewLogs()
+{
+    return $this->hasMany(ViewLog::class);
+}
+
 }

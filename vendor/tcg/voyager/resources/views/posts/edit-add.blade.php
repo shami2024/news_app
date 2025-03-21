@@ -152,9 +152,12 @@
                             </div>
                         </div>
                         <div class="panel-body">
+
+    
+        
                             @php
                                 $dataTypeRows = $dataType->{($edit ? 'editRows' : 'addRows' )};
-                                $exclude = ['title', 'body', 'excerpt', 'slug', 'status', 'category_id', 'author_id', 'featured', 'image', 'meta_description', 'meta_keywords', 'seo_title'];
+                                $exclude = ['title', 'body', 'excerpt', 'slug', 'status', 'category_id', 'author_id', 'featured', 'image', 'meta_description', 'meta_keywords', 'seo_title','interests','redaction_id'];
                             @endphp
 
                             @foreach($dataTypeRows as $row)
@@ -186,6 +189,8 @@
                     </div>
 
                 </div>
+
+                
                 <div class="col-md-4">
                     <!-- ### DETAILS ### -->
                     <div class="panel panel panel-bordered panel-warning">
@@ -223,6 +228,30 @@
                                     @endforeach
                                 </select>
                             </div>
+                            @php
+                            
+                            $interests = App\Models\Interest::all();
+                            $redactions = App\Models\Redaction::all();
+                            @endphp
+
+                            <div class="form-group">
+                                <label for="interests">{{ __('voyager::post.Interests') }}</label>
+                                <select name="interests[]" class="form-control select2" multiple>
+                                    @foreach ($interests as $interest)
+                                        <option value="{{ $interest->name }}">{{ $interest->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="interests">{{ __('voyager::post.Redaction') }}</label>
+                                <select name="redaction_id" class="form-control select2" >
+                                    @foreach ($redactions as $redaction)
+                                        <option value="{{ $redaction->id }}">{{ $redaction->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+        
                             <div class="form-group">
                                 <label for="featured">{{ __('voyager::generic.featured') }}</label>
                                 <input type="checkbox" name="featured"@if(isset($dataTypeContent->featured) && $dataTypeContent->featured) checked="checked"@endif>
