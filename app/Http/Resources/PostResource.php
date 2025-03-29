@@ -41,6 +41,7 @@ class PostResource extends JsonResource
             'meta_description' => $this->meta_description ?? '',
             'meta_keywords' => $this->meta_keywords ?? '',
             'likes_count' => $this->likes_count,
+            'if_user_like' =>auth()->user() ? auth()->user()->hasLikedPost($this->id) : false,
             'comments_count' => $this->comments_count,
             'shares_count' => $this->shares_count,
 

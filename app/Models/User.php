@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use TCG\Voyager\Models\Post;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -71,6 +72,17 @@ public function shares()
 public function viewLogs()
 {
     return $this->hasMany(ViewLog::class);
+}
+
+
+public function likedPosts()
+{
+    return $this->belongsToMany(Post::class, 'likes')->withTimestamps();
+}
+
+public function hasLikedPost($postId)
+{
+    return $this->likedPosts()->where('post_id', $postId)->exists();
 }
 
 }

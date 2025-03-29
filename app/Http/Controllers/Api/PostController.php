@@ -57,7 +57,8 @@ class PostController extends Controller
         ->paginate(10);
 
         if ($posts->isEmpty()) {
-            return response()->json(['message' => 'No posts found for this category'], 404);
+            return Common::apiResponse(1,'No posts found for this ',[],404);
+
         }
         return Common::apiResponse(1,'',PostResource::collection($posts));
 
